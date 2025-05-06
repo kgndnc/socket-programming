@@ -2,22 +2,22 @@
 CC = gcc
 CFLAGS = -Wall
 
-# Source files
-SRCS = showip.c socket.c client.c tcpserver.c
+# Find all C files in the current directory
+SOURCES = $(wildcard *.c)
 
-# Executable names (same as source files without the .c extension)
-EXECS = showip socket client tcpserver
+# Create a list of executable names (same as source files but without .c extension)
+EXECUTABLES = $(SOURCES:.c=)
 
-# Default target builds all executables
-all: $(EXECS)
+# Default target - builds all executables
+all: $(EXECUTABLES)
 
-# Generic rule to build executables from C files
+# Pattern rule to build an executable from a C file
 %: %.c
-	$(CC) $(CFLAGS) -o $@ $<
+	$(CC) $(CFLAGS) $< -o $@
 
-# Clean up
+# Clean up all executables
 clean:
-	rm -f $(EXECS)
+	rm -f $(EXECUTABLES)
 
 # Phony targets
 .PHONY: all clean
